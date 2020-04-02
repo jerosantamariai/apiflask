@@ -1,0 +1,111 @@
+NOTACIONES
+
+
+>> ARCHIVO O CARPETA <<
+++ LINEA DE COMANDOS TERMINAL ++
+** LINEA DE COMANDOS ARCHIVO **
+
+
+
+VIDEO1 [0:00 - 9:20] --- COMENZANDO A CREAR EL PROYECTO ---
+
+
+
+PASO 0: Una vez instalado Python (3.7.7) y pipenv (2018.11.26) con sus respectivas versiones,
+hacemos una nueva carpeta donde se realizara el proyecto. En este caso será >> API-REST-FLASK <<.
+
+PASO 1: Dentro de esta carpeta debemos hacer un archivo llamado >> Pipfile <<.
+
+PASO 2: Una vez hecho el archivo, vamos a la terminal y escribimos ++ pipenv shell ++ para ha-
+cer el entorno virtual.
+
+PASO 3: Una vez creado el entorno virtual, hacemos un archivo >> app.py << y comenzamos a instalar
+las librerias de Flask con el comando en terminal ++ pipenv install flask flask-script flask-migrate flask-cors flask-sqlalchemy ++
+
+Las librerias y que hace cada una de ellas son las siguientes:
+    - Flask: Libreria principal.
+    - Flask Script / Migrate: Configurar el entorno de la aplicacion.
+    - Flask CORS: Decidir quien o no puede consultar la pagina.
+    - Flask SQLAlchemy: Permite conectarse al gestor de BBDD.
+
+UNA VEZ TERMINADA LA INSTALACION SE CREARÁ AUTOMATICAMENTE EL ARCHIVO >> Pipfile.lock <<. EN ESTE
+ARCHIVO PODREMOS VER QUE VERSIONES DE PAQUETES TENEMOS INSTALADO DE CADA LIBRERIA.
+
+PASO 4: Hacer una carpeta >> templates << CON UN ARCHIVO >> index.html <<. [Aqui me estoy 
+anticipando al registro 21:30 del VIDEO1, pero que no genera problemas en la creacion].
+En el HTML simplemente hacemos ** HTML:5 ** y modificamos el ** title ** del HEAD y en el
+BODY simplemente colocamos ** <H1> ** con lo que deseemos.
+
+
+
+VIDEO1 [9:20 - 25:47] --- PROGRAMANDO ARCHIVOS APP.PY Y MODELS.PY ---
+
+
+
+En cada uno de los archivos se puede ver que realizar. Existen 2 cosas importantes en las que
+tuve problemas en el momento en que lo hice por primera vez:
+
+    1. INDENTATION (sangrias/espacio): La solucion fue directamente revisar cada linea de 
+    codigo eliminando cada espacio innecesario.
+    2. Mayusculas y Minusculas.
+
+En cada uno de los archivos, por lo menos en este video debemos poner lo siguiente:
+
+
+
+** INICIO COMENTARIO APP.PY **
+
+from flask import Flask, jsonify, request, render_template
+from flask_script import Manager
+from flask_migrate import Migrate, MigrateCommand
+from flask_cors import CORS
+from models import db
+
+
+app = Flask(__name__)
+app.config['DEBUG '] = True
+app.config['ENV'] = 'development'
+app.config['SQLALCHEMY_DATABASE_URI'] = ''
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+Migrate(app, db)
+CORS(app)
+
+manager = Manager(app)
+manager.add_command("db", MigrateCommand)
+
+@app.route("/")
+def root():
+    return render_template('index.html')
+
+if __name__ == '__main__':
+    manager.run()
+
+** FIN COMENTARIO APP.PY **
+
+
+
+** INICIO COMENTARIO MODELS.PY **
+
+from flask_sqlalchemy import SQLAlchemy
+db = SQLAlchemy()
+
+** FIN COMENTARIO MODELS.PY **
+
+
+
+** INICIO COMENTARIO INDEX.HTML **
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API REST FLASK</title>
+</head>
+<body>
+    <h1>API REST FLASK</h1>
+</body>
+</html>
+
+** FIN COMENTARIO INDEX.HTML **
