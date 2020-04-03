@@ -210,3 +210,41 @@ Entrando en materia del video y tal como se explico antes se divide en 2 partes:
 
 
         **
+
+
+
+FIN VIDEO2 [0:00 - 19:09] --- DEFINIR RUTAS PARA UN DETERMINADO METODO ---
+
+
+
+
+VIDEO3 [0:00 - 25:06] --- BASE DE DATOS ---
+
+Primero que todo definir realmente lo que es una Base de Datos (BBDD). Wikipedia dice:
+"es un conjunto de datos pertenecientes a un mismo contexto y almacenados sistemáticamente para su posterior uso."
+Particularmente las BBDD funcionan en base a columnas, en donde cada columna almacena una categoria
+especifica con la cual uno puede generar diferentes cruces con esta informacion. Por ejemplo, para un supermercado:
+
+    ID  |   CATEGORIA   |   PRODUCTO    |   COSTO(KG)   |   PRECIO(KG)  |   CANTIDAD STOCK
+    1   |     FRUTAS    |    MANZANA    |      300      |      700      |         500
+    2   |     FRUTAS    |     PERA      |      200      |      600      |         700
+    3   |   ABARROTES   |     ARROZ     |      500      |     1000      |         300
+    4   |   ABARROTES   |   TALLARINES  |      300      |      700      |         100
+    5   |   TECNOLOGIA  |       TV      |     100000    |    300000     |         50
+    6   |   TECNOLOGIA  |       PC      |     150000    |    700000     |         10
+    
+De esta forma puedo saber que las FRUTAS>MANZANA tiene ID=1, cuanto cuesta, a cuanto lo vendo y cuanto
+tengo disponible para vender. Por lo tanto la informacion la iremos almacenando en columnas.
+
+Dicho esto, el video3 tiene 2 partes importantes:
+
+    1) [00:00 - 05:00] Codigo en >> models.py << linea por linea dice lo siguiente:
+        a) Creamos una tabla, de tipo clase llamada "Contact" que hereda db.model.
+        b) Le decimos que la tabla se llamará "contacts".
+        c) Ahora le damos los atributos que tendrá cada columna. Para este caso, las columnas
+        se llamarán "ID" (de tipo integer), "NAME" y "PHONE" (ambos de tipo string con maximo
+        100 caracteres cada 1). Aqui vienen 2 atributos importantes:
+            - Primary_key: Corresponde a la clave primaria de la tabla, este valor no lo entregamos
+            sino que se genera de forma automatica cada vez que se ingresa información a la BBDD.
+            - Nullable: Entrega de información obligatoria.
+        d) Serializar la informacion. [min 3]        
