@@ -5,14 +5,18 @@ from flask_migrate import Migrate, MigrateCommand
 from flask_cors import CORS                                     # V1 HASTA AQUI IMPORTO LA INFORMACION DE LAS LIBRERIAS QUE INSTALE ANTERIORMENTE
 from models import db                                           # V1 AQUI IMPORTAMOS LA INFORMACION UNA VEZ QUE SE CREA EL ARCHIVO >> MODELS.PY << CON SUS COMANDOS RESPECTIVOS
 
-BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))                                                   # V3 BASE_DIR APARECE CUANDO IMPORTAMOS OS, ES LA BASE DE LA APLICACION EN DONDE DETECTA CON QUE SISTEMA SE ESTA OPERANDO. EL PARAMETRO FILE ES UN ATRIBUTO DE PYTHON QUE ME PERMITE SABER EL NOMBRE DEL ARCHIVO QUE SE ESTA EJECUTANDO
 
 app = Flask(__name__)                                           # V1 INSTANCIA DE FLASK, QUE RECIBE UN ATRIBUTO DE PYTHON QU ES __NAME__ QUE ES OBLIGATORIO. 
 app.url_map.strict_slashes = False                                                  # V2 CON ESTE CODIGO EVITAMOS QUE SEA MUY ESTRICTA LA APLICACION A LA HORA DE QUE BUSQUE O LEA LAS RUTAS POR CONTENER O NO SLASHES (/) EXPLICACION MIN [13:30 - 14:00]
 app.config['DEBUG'] = True                                      # V1 ME PERMITE VER LOS ERRORES DE MI APLICACION
 app.config['ENV'] = 'development'                               # V1 ESTE ES EL ENTORNO EN DONDE VOY A PUBLICAR MI APLICACION//EN PROCESO DE DESARROLLO PONEMOS 'development', DE LO CONTRARIO 'production' PARA PUBLICAR EN NUESTRO SERVIDO WEB
-app.config['SQLALCHEMY_DATABASE_URI'] = ''                      # V1 ESTA Y LA SIGUIENTE CONFIGURACION LLAMAN A LA LIBRERIA DE SQLALCHEMY, ESTE ME VA A INDICAR EN QUE GESTOR DE BASE DE DATOS VOY A TRABAJAR
+
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(BASE_DIR,'db.sqlite3')                      # V1 ESTA Y LA SIGUIENTE CONFIGURACION LLAMAN A LA LIBRERIA DE SQLALCHEMY, ESTE ME VA A INDICAR EN QUE GESTOR DE BASE DE DATOS VOY A TRABAJAR // V3 SE AGREGA LA RUTA PARA GENERAR UNA BBDD SQLITE3
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:02155120@localhost/apiflask'                                          # V3 AQUI ENVIAMOS LA INFORMACION PARA EL DBEAVER
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False            # V1 HACE UN TRACKING DE LO QUE MODIFICO DAAAAH!
+
+db.init_app(app)                                                                                        # V3 AQUI ESTAMOS VINCULANDO EL OBJETO DB A NUESTRA APLICACION Y ASI PODER DAR LOS MIGRATECOMMANDS (INIT, MIGRATE Y UPDATE) // AQUI FUE CUANDO YA TUVE QUE INSTALAR ALCHEMY NUEVAMENTE (?) Y PYMYSQL
 
 Migrate(app, db)                                                # V1 TRAMOS MIGRATE QUE LE DAMOS LOS PARAMETROS DONDE TRABAJARA, Y QUE SEREA LA APP Y LA BD
 CORS(app)                                                       # V1 TRAMOS A FUNCIONAMIENTO CORS PARA LA APP

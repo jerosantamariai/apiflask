@@ -298,3 +298,10 @@ VIDEO3 [0:00 - 25:06] --- BASE DE DATOS ---
 
 
                     ii. Para MySQL (Para traabajos 4x4): 
+
+        ****************EJECUTAR LA MIGRACION MIN 10:00*************
+        VOLVI (?) A INSTALAR EL SQL-ALCHEMY Y SE INSTALO TAMBIEN ++ pipenv install PyMySQL ++
+        Y CARGUE LOS MIGRATECOMMAND EN TERMINAL DE LA SIGUIENTE MANERA Y ORDEN:
+            ++ python app.py db init ++
+            ++ python app.py db migrate ++
+            ++ python app.py db upgrade ++
