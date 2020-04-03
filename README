@@ -4,6 +4,8 @@ NOTACIONES
 >> ARCHIVO O CARPETA <<
 ++ LINEA DE COMANDOS TERMINAL ++
 ** LINEA DE COMANDOS ARCHIVO **
+[LINEA TEMPORAL DEL VIDEO]
+"URLS CON MAS INFORMACION"
 
 
 
@@ -109,3 +111,102 @@ db = SQLAlchemy()
 </html>
 
 ** FIN COMENTARIO INDEX.HTML **
+
+
+
+FIN VIDEO1 --- COMENZANDO A CREAR EL PROYECTO ---
+
+
+
+
+
+
+VIDEO2 [0:00 - 19:09] --- DEFINIR RUTAS PARA UN DETERMINADO METODO ---
+
+
+
+En el segundo video nos presentan la codificacion para definir rutas, tanto para 
+1 parametro [00:00 - 15:30] como para varios parametros [15:30 - 19:09]. Para esta
+parte del video necesitamos recordar 4 cosas vistas con anterioridad:
+
+1) Los metodos para poder funcionar con una API son: GET, PUT, POST y DELETE.
+    a) GET puede trabajar a todo nivel por que con los accesos suficientes, puede
+    recorrer completamente la API, ya que solo puede leer información.
+    b) POST crea nuevos recursos para la API y por lo tanto crea id's.
+    c) PUT se usa para actualizar los recursos existentes en una API. Por lo tanto,
+    necesita de una version preexistente de un id.
+    d) DELETE borra informacion de la API y por lo tanto necesita de informacion 
+    preexistente para poder funcionar. El espacio queda NULL.
+
+    "https://www.restapitutorial.com/lessons/httpmethods.html"
+
+2) Codigos de Estado de petición:
+    - 1XX: Informativos.
+    - 2XX: Recibido, procesado o ejecutado correctamente.
+    - 3XX: Información cambiada de lugar.
+    - 4XX: Errores por parte del usuario.
+    - 5XX: Errores por parte del servidor.
+
+    "https://www.xataka.com/basics/errores-404-500-502-504-y-mas-en-paginas-web-que-significan"
+
+3) OBJETOS: En programacion debemos recordar que hay varios tipos de datos con los que podemos
+trabajar como lo son los strings, integers, booleans, NULL, array y objetos. Las APIs utilizan
+en practicamente su totalidad el formato JSON que entrega data en forma de objetos. Pueden estar
+escritos en 1 sola linea, pero por "buenas practicas" se ven de la siguiente forma:
+
+{
+    "ATRIBUTO1": "VALOR1",
+    "ATRIBUTO2": "VALOR2",
+    .
+    .
+    .
+    "ATRIBUTON": "VALORN"
+}
+
+4) Insomnia: En el curso usamos insomnia principalmente para generar un "dialogo" con la API
+de manera de hacer consultas en ella.
+
+Entrando en materia del video y tal como se explico antes se divide en 2 partes:
+
+    1) Definir rutas para 1 solo parametro:
+        
+        
+        
+        **
+
+
+
+        @app.route('/api/test', methods=['GET', 'POST'])
+        @app.route('/api/test/<int:id>', methods=['GET', 'PUT', 'DELETE'])
+        def test(id = None):
+        if request.method == 'GET':
+            return jsonify({"msg": "method GET"}), 200              <----- ¡¡¡DENTRO DE JSONIFY HAY UN OBJETO!!!
+        if request.method == 'POST':
+            return jsonify({"msg": "method POST"}), 200
+        if request.method == 'PUT':
+            return jsonify({"msg": "method PUT"}), 200
+        if request.method == 'DELETE':
+            return jsonify({"msg": "method DELETE"}), 200
+
+
+
+        **
+
+    2) Definir rutas para 2 parametros:
+
+        
+        
+        **
+
+
+
+        @app.route('/api/test/<int:id>/category/<int:cat_id>', methods=['GET', 'POST'])
+        def test2(id, cat_id):
+        if request.method == 'GET':
+            return jsonify({"valores": {"id": id, "cat_id": cat_id}}), 200          <----- AQUI HAY 2 OBJETOS DENTRO DE OTRO QUE SE LLAMA "VALORES"
+        if request.method == 'POST':
+            return jsonify({"valores": {"id": id, "cat_id": cat_id}}), 200
+
+
+
+        **
